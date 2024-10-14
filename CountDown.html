@@ -1,0 +1,144 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Timer</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #121212;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .countdown-container {
+            text-align: center;
+        }
+
+        .countdown {
+            color: #ffffff;
+            font-size: 48px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .countdown span {
+            margin: 0 10px;
+            animation: fade-in 1s ease-in-out infinite alternate;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 18px;
+            color: #ffffff;
+            background-color: #333;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        @keyframes fade-in {
+            from {
+                opacity: 0.3;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        #stopBtn {
+            background-color: #d9534f;
+        }
+
+        #stopBtn:hover {
+            background-color: #c9302c;
+        }
+
+        #stopBtn:active {
+            transform: scale(0.98);
+        }
+    </style>
+</head>
+<body>
+    <div class="countdown-container">
+        <div class="countdown">
+            <span id="days">0</span><span>Days</span>
+            <span id="hours">0</span><span>Hours</span>
+            <span id="minutes">0</span><span>Minutes</span>
+            <span id="seconds">0</span><span>Seconds</span>
+        </div>
+        <div class="buttons">
+            <button id="startBtn">Start</button>
+            <button id="stopBtn">Stop</button>
+        </div>
+    </div>
+
+    <script>
+        let timer = null;
+        let seconds = 0;
+        let minutes = 0;
+        let hours = 0;
+        let days = 0;
+
+        function updateCountdown() {
+            seconds++;
+
+            if (seconds >= 60) {
+                minutes++;
+                seconds = 0;
+            }
+
+            if (minutes >= 60) {
+                hours++;
+                minutes = 0;
+            }
+
+            if (hours >= 24) {
+                days++;
+                hours = 0;
+            }
+
+            document.getElementById("days").textContent = days;
+            document.getElementById("hours").textContent = hours;
+            document.getElementById("minutes").textContent = minutes;
+            document.getElementById("seconds").textContent = seconds;
+
+            timer = setTimeout(updateCountdown, 1000);
+        }
+
+        document.getElementById("startBtn").addEventListener("click", function() {
+            if (!timer) {
+                updateCountdown();
+            }
+        });
+
+        document.getElementById("stopBtn").addEventListener("click", function() {
+            clearTimeout(timer);
+            timer = null;
+        });
+    </script>
+</body>
+</html>
